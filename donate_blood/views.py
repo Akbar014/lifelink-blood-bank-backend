@@ -138,7 +138,7 @@ class UserRegistrationApiView(APIView):
                 token = default_token_generator.make_token(user)
                 uid = urlsafe_base64_encode(force_bytes(user.pk))
                 print("uid ", uid)
-                confirm_link = f"https://lifelink-4bu4.onrender.com/donate_blood/active/{uid}/{token}"
+                confirm_link = f"https://lifelink-five.vercel.app/donate_blood/active/{uid}/{token}"
                 email_subject = "Confirm Your Email"
                 email_body = render_to_string('confirm_email.html', {'confirm_link': confirm_link})
 
