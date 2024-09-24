@@ -45,7 +45,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 #     'https://*.127.0.0.1',
 # ]
 
-CSRF_TRUSTED_ORIGINS = ['https://lifelink-4bu4.onrender.com','http://127.0.0.1:5500', 'http://localhost:5500', 'https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://lifelink-five.vercel.app','http://127.0.0.1:5500', 'http://localhost:5500', 'https://*.127.0.0.1']
 
 
 # Application definition
@@ -230,5 +230,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = env("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD") 
+# EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD") 
+EMAIL_HOST_USER='akbar.cse47@gmail.com'
+EMAIL_HOST_PASSWORD='ahsq cgph lxvw hkre'
