@@ -44,6 +44,9 @@ class RegistrationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({'error': "Passwonrd Doesn't Matched"})
         if User.objects.filter(email=email).exists():
             raise serializers.ValidationError({'error': 'Email Already Exists'})
+        if User.objects.filter(username=username).exists():
+            raise serializers.ValidationError({'error': 'Username Already Exists,Try different one'})
+
 
         user = User(username = username, email=email, first_name = first_name, last_name = last_name)
        
