@@ -45,11 +45,11 @@ py manage.py runserver
 
 <h2>🍰 API endpoints</h2> <br>
 
-"donation-requests": "/donate_blood/donation-requests/",
-"donation-history": "/donate_blood/donation-history/",
-"donation-accepted": /donate_blood/donation-accepted/",
-"users": "/donate_blood/users/",
-"contactForm": "/donate_blood/contactForm/"
+"donation-requests": "/donate_blood/donation-requests/", <br>
+"donation-history": "/donate_blood/donation-history/", <br>
+"donation-accepted": /donate_blood/donation-accepted/", <br>
+"users": "/donate_blood/users/", <br>
+"contactForm": "/donate_blood/contactForm/" <br>
 
     
 <h2>🍰 Contribution Guidelines:</h2>
