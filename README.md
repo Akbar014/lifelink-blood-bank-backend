@@ -1,6 +1,5 @@
 <h1 align="center" id="title">LifeLink API</h1>
 
-<p align="center"><img src="" alt="project-image"></p>
 
 <p id="description">This is blood donation website. If anyone is suitable for donating blood then he can register here and donate blood to patient who requested for blood. Donor and receiver both can donate and receive blood. Hope this website able to help many people who need blood urgently. If you are fit for donating blood then please register in our system. Or if you need blood urgently for any emergency patient then please register in our system and create a request for blood donation.</p>
 
@@ -51,8 +50,6 @@ py manage.py runserver
 "users": "/donate_blood/users/", <br>
 "contactForm": "/donate_blood/contactForm/" <br>
 
-    
-<h2>🍰 Contribution Guidelines:</h2>
 
   
 <h2>💻 Built with</h2>
