@@ -8,6 +8,7 @@ django-environ==0.11.2
 django-filter==24.3
 djangorestframework==3.15.2
 Markdown==3.7
+pillow==11.0.0
 psycopg2-binary==2.9.9
 six==1.16.0
 sqlparse==0.5.1
