@@ -26,6 +26,8 @@ urlpatterns = [
     path('complete-request/<int:donation_request_id>/', views.complete, name = 'complete'),
     
     path('blood-group/<str:blood_group>/', views.blood_group_filter, name = 'blood_group_filter'),
+
+    path('donate_blood_users/<int:user_id>/', views.UserAccountDetailView.as_view(), name='user-account-detail'),
 ]
 
 

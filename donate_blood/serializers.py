@@ -12,6 +12,8 @@ class DonationRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.DonationRequest
         fields = '__all__'
+        # exclude = ['accepted_by'] 
+        read_only_fields = ['accepted_by']
 
 class RegistrationSerializer(serializers.ModelSerializer):
     

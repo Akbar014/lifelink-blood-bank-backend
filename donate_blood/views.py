@@ -91,6 +91,18 @@ class DonationAcceptedViewSet(viewsets.ModelViewSet):
         
         # return models.DonatioHistory.objects.all()
 
+class UserAccountDetailView(generics.RetrieveAPIView):
+    queryset = models.UserAccount.objects.all()
+    serializer_class = serializers.UserAccountSerializer
+
+    def get(self, request, user_id):
+        try:
+            # Get the UserAccount linked to the specified User ID
+            user_account = models.UserAccount.objects.get(user__id=user_id)
+            serializer = self.get_serializer(user_account)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except models.UserAccount.DoesNotExist:
+            return Response({"detail": "UserAccount not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -183,9 +195,10 @@ def accept(request, donation_request_id):
         else:
             if user_account.blood_group == donation_request.blood_group:
                 donation_request.is_accepted = True
+                donation_request.accepted_by = request.user
                 donation_request.status = 'Accepted'
                 donation_request.save()
-                models.DonationAccepted.objects.create(user=request.user, donation_request=donation_request)
+                # models.DonationAccepted.objects.create(user=request.user, donation_request=donation_request)
                 models.DonatioHistory.objects.create(user=request.user, donation_request=donation_request, status='Accepted')
                 return JsonResponse({'message': 'Donation Request Accepted'}, status=200)
             else:
