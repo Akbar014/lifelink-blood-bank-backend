@@ -74,7 +74,6 @@ py manage.py runserver
 <br>
 <h2>💻 Built with</h2>
 
-Technologies used in the project:
 *   django
 *   django rest framwork
 *   postgres
