@@ -66,14 +66,12 @@ py manage.py runserver
 - `GET /donate_blood/donation-requests/<int:donation_request_id>`
 - `PATCH /donate_blood/donation-requests/<int:donation_request_id>`
 
-  ### Donation History
-  - `GET /donate_blood/donation-history/`
+### Donation History
+- `GET /donate_blood/donation-history/`
 
-  ### Contact 
+### Contact 
 - `POST /donate_blood/contactForm/`
-
-
-  
+<br>
 <h2>💻 Built with</h2>
 
 Technologies used in the project:
