@@ -43,8 +43,8 @@ py manage.py runserver
 <br>
 
 <h2>🍰 API endpoints</h2> <br>
-#### User
-## Donation-requests
+#### User <br>
+-  `/auth/register/`
 "GET /donate_blood/donation-requests/", <br>
 "donation-history": "/donate_blood/donation-history/", <br>
 "donation-accepted": /donate_blood/donation-accepted/", <br>
