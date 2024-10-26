@@ -45,9 +45,9 @@ py manage.py runserver
 ## 🍰 API Endpoints
 
 ### Autehtication
-- `/donate_blood/register/`
-- `/donate_blood/login/`
-- `/donate_blood/logout/`
+- `POST /donate_blood/register/`
+- `POST /donate_blood/login/`
+- `POST /donate_blood/logout/`
   
 ### User 
 - `GET /donate_blood/users/`
