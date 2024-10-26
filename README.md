@@ -48,7 +48,7 @@ py manage.py runserver
 - `/donate_blood/register/`
 - `/donate_blood/login/`
 - `/donate_blood/logout/`
-- 
+  
 ### User 
 - `GET /donate_blood/users/`
 - `PUT /donate_blood/users/`
