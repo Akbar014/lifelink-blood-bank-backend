@@ -42,15 +42,18 @@ py manage.py runserver
 ```
 <br>
 
-<h2>🍰 API endpoints</h2> <br>
+## 🍰 API Endpoints
+
 - `/auth/register/`
-- `/auth/register/`
-- `/auth/register/`
-"GET /donate_blood/donation-requests/", <br>
-"donation-history": "/donate_blood/donation-history/", <br>
-"donation-accepted": /donate_blood/donation-accepted/", <br>
-"users": "/donate_blood/users/", <br>
-"contactForm": "/donate_blood/contactForm/" <br>
+- `/auth/login/`
+- `/auth/logout/`
+
+### Donation Endpoints
+- `GET /donate_blood/donation-requests/`
+- `POST /donate_blood/donation-history/`
+- `PUT /donate_blood/donation-accepted/`
+- `GET /donate_blood/users/`
+- `POST /donate_blood/contactForm/`
 
 
   
