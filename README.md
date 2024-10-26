@@ -44,15 +44,32 @@ py manage.py runserver
 
 ## 🍰 API Endpoints
 
-- `/auth/register/`
-- `/auth/login/`
-- `/auth/logout/`
-
-### Donation Endpoints
-- `GET /donate_blood/donation-requests/`
-- `POST /donate_blood/donation-history/`
-- `PUT /donate_blood/donation-accepted/`
+### Autehtication
+- `/donate_blood/register/`
+- `/donate_blood/login/`
+- `/donate_blood/logout/`
+- 
+### User 
 - `GET /donate_blood/users/`
+- `PUT /donate_blood/users/`
+- `GET /donate_blood/users/<int:user_id>`
+- `PUT /donate_blood/users/<int:user_id>`
+
+### Authenticated User
+- `POST accept-request/<int:donation_request_id>/`
+- `POST cancel-request/<int:donation_request_id>/`
+- `POST complete-request/<int:donation_request_id>/`
+
+### Donation Request 
+- `GET /donate_blood/donation-requests/`
+- `POST /donate_blood/donation-requests/`
+- `GET /donate_blood/donation-requests/<int:donation_request_id>`
+- `PATCH /donate_blood/donation-requests/<int:donation_request_id>`
+
+  ### Donation History
+  - `GET /donate_blood/donation-history/`
+
+  ### Contact 
 - `POST /donate_blood/contactForm/`
 
 
@@ -60,7 +77,6 @@ py manage.py runserver
 <h2>💻 Built with</h2>
 
 Technologies used in the project:
-
 *   django
 *   django rest framwork
 *   postgres
