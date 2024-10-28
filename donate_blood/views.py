@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse , HttpResponseRedirect
 from django.utils import timezone
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
@@ -25,6 +25,14 @@ from rest_framework.authtoken.models import Token
 from django.core.mail import EmailMultiAlternatives, send_mail
 from django.template.loader import render_to_string
 from django.shortcuts import redirect
+
+from sslcommerz_lib import SSLCOMMERZ 
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
+import random
+import string
+
 # Create your views here.
 
 class DonationRequestViewset(viewsets.ModelViewSet):
@@ -263,7 +271,64 @@ def blood_group_filter(request, blood_group):
        
     except models.DonationRequest.DoesNotExist:
         return JsonResponse({'message': 'Donation Request not found'}, status=404)
-    
+
+def unique_transaction_id_generator(size=10, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
+
+
+@api_view(['GET', 'POST'])
+def donateMoney(request):
+
+    settings = { 'store_id': 'abv671fb22291c1a', 'store_pass': 'abv671fb22291c1a@ssl', 'issandbox': True }
+    sslcz = SSLCOMMERZ(settings)
+    post_body = {}
+    post_body['total_amount'] = request.data.get('amount')
+    post_body['currency'] = "BDT"
+    post_body['tran_id'] = unique_transaction_id_generator()
+    post_body['success_url'] = f"lifelink-five.vercel.app/donate_blood/payment-success-url/{request.user.username}/{post_body['tran_id']}/success?redirect=true"
+    post_body['fail_url'] = "your fail url"
+    post_body['cancel_url'] = "your cancel url"
+    post_body['emi_option'] = 0
+    post_body['cus_name'] = request.user.username
+    post_body['cus_email'] = request.user.email
+    post_body['cus_phone'] = "01401277707"
+    post_body['cus_add1'] = "customer address"
+    post_body['cus_city'] = "Dhaka"
+    post_body['cus_country'] = "Bangladesh"
+    post_body['shipping_method'] = "NO"
+    post_body['multi_card_name'] = ""
+    post_body['num_of_item'] = 1
+    post_body['product_name'] = "Test"
+    post_body['product_category'] = "Test Category"
+    post_body['product_profile'] = "general"
+
+
+    response = sslcz.createSession(post_body) # API response
+    # print(response)
+    # Need to redirect user to response['GatewayPageURL']
+    # return redirect(response['GatewayPageURL'])
+    return JsonResponse({'url': response['GatewayPageURL']})
+
+@method_decorator(csrf_exempt, name='dispatch')
+class PaymentSuccessView(APIView):
+    permission_classes = [AllowAny] 
+    def post(self, request, username, tran_id):
+        user = User.objects.filter(username = username).first()
+        if request.data.get('status') == 'VALID' and request.data.get('tran_id') == tran_id:
+            models.Payment.objects.create(
+                transaction_id = tran_id,
+                amount = request.data.get('amount'),
+                user = user,
+            )
+
+            if request.GET.get('redirect') == 'true':
+                # return HttpResponseRedirect ("https://fabulous-trifle-8657b5.netlify.app/")
+                return HttpResponseRedirect ("https://fabulous-trifle-8657b5.netlify.app/dashboard.html?success=true")
+            return Response ({'message': 'Paymeny successfull'}, status = status.HTTP_200_OK)
+        return Response ({'message': 'Payment Failed'}, status= status.HTTP_400_BAD_REQUEST)
+
+
+
 
 class UserLoginApiView(APIView):
     permission_classes = [AllowAny] 
@@ -328,5 +393,12 @@ class ContactViewSet(viewsets.ModelViewSet):
             fail_silently=False,
         )
 
+class PaymentViewset(viewsets.ModelViewSet):
+    
+    # queryset = models.Payment.objects.filter(user= self.request.user)
+    # queryset = models.DonationRequest.objects.exclude(status='Completed')
+    serializer_class = serializers.PaaymentSerializer  
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
- 
+    def get_queryset(self):
+        return models.Payment.objects.filter(user=self.request.user)

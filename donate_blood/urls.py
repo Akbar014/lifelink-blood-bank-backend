@@ -12,6 +12,7 @@ router.register ('donation-history', views.DonationHistoryViewSet, basename='don
 router.register ('donation-accepted', views.DonationAcceptedViewSet, basename='donation-accepted')
 router.register('users', views.UserViewSet, basename='user')
 router.register('contactForm', views.ContactViewSet, basename='contactForm')
+router.register('donation_money', views.PaymentViewset, basename='PaymentView'),
 
 
 urlpatterns = [
@@ -28,6 +29,9 @@ urlpatterns = [
     path('blood-group/<str:blood_group>/', views.blood_group_filter, name = 'blood_group_filter'),
 
     path('donate_blood_users/<int:user_id>/', views.UserAccountDetailView.as_view(), name='user-account-detail'),
+    path('donate-money/', views.donateMoney, name='donateMoney'),
+    path('payment-success-url/<str:username>/<str:tran_id>/success', views.PaymentSuccessView.as_view(), name='PaymentSuccessView'),
+    
 ]
 
 

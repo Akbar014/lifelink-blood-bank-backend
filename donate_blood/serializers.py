@@ -166,6 +166,12 @@ class DonationHistorySerializer(serializers.ModelSerializer):
         model = models.DonatioHistory
         fields = '__all__'
 
+class PaaymentSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = models.Payment
+        fields = '__all__'
+
 
 
 
