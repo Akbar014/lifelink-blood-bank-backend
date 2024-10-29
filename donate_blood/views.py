@@ -285,9 +285,9 @@ def donateMoney(request):
     post_body['total_amount'] = request.data.get('amount')
     post_body['currency'] = "BDT"
     post_body['tran_id'] = unique_transaction_id_generator()
-    post_body['success_url'] = f"lifelink-five.vercel.app/donate_blood/payment-success-url/{request.user.username}/{post_body['tran_id']}/success?redirect=true"
-    post_body['fail_url'] = "your fail url"
-    post_body['cancel_url'] = "your cancel url"
+    post_body['success_url'] = f"https://lifelink-five.vercel.app/donate_blood/payment-success-url/{request.user.username}/{post_body['tran_id']}/success?redirect=true"
+    post_body['fail_url'] = "https://fabulous-trifle-8657b5.netlify.app/dashboard.html?success=false"
+    post_body['cancel_url'] = "https://fabulous-trifle-8657b5.netlify.app/dashboard.html?success=cancel"
     post_body['emi_option'] = 0
     post_body['cus_name'] = request.user.username
     post_body['cus_email'] = request.user.email
