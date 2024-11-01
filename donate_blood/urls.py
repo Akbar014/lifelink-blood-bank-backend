@@ -31,6 +31,8 @@ urlpatterns = [
     path('donate_blood_users/<int:user_id>/', views.UserAccountDetailView.as_view(), name='user-account-detail'),
     path('donate-money/', views.donateMoney, name='donateMoney'),
     path('payment-success-url/<str:username>/<str:tran_id>/success', views.PaymentSuccessView.as_view(), name='PaymentSuccessView'),
+
+    path('statistics/', views.statistics, name='statistics'),
     
 ]
 

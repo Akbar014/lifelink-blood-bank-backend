@@ -402,3 +402,21 @@ class PaymentViewset(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return models.Payment.objects.filter(user=self.request.user)
+
+
+@api_view(['GET', 'POST'])
+def statistics(request):
+    donation_request_count = models.DonationRequest.objects.filter(user=request.user).count()
+    completed_request_count = models.DonationRequest.objects.filter(user=request.user, status='Completed').count()
+    pending_request_count = models.DonationRequest.objects.filter(user=request.user, status='Pending').count()
+    accepted_request_count = models.DonationRequest.objects.filter(user=request.user, status='Accepted').count()
+
+    accepted_request_by_you_count = models.DonationAccepted.objects.filter(user= request.user).count()
+
+    return Response({
+        "total_donation_request": donation_request_count,
+        "total_completed_request": completed_request_count,
+        "total_pending_request": pending_request_count,
+        "total_accepted_request": accepted_request_count,
+        "accepted_request_by_you_count": accepted_request_by_you_count,
+    })
