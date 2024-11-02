@@ -63,6 +63,14 @@ class DonationRequestViewset(viewsets.ModelViewSet):
         serializer = serializers.DonationRequestSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @action(detail=False, methods=['get'], permission_classes=[permissions.IsAuthenticated])
+    def request_accepted_by_me(self, request): 
+        user = request.user
+        blood_group = request.query_params.get('blood_group', None)
+        queryset = models.DonationRequest.objects.filter(accepted_by=user)
+        serializer = serializers.DonationRequestSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 
 
@@ -205,8 +213,8 @@ def accept(request, donation_request_id):
                 donation_request.is_accepted = True
                 donation_request.accepted_by = request.user
                 donation_request.status = 'Accepted'
-                donation_request.save()
-                # models.DonationAccepted.objects.create(user=request.user, donation_request=donation_request)
+                donation_request.save() 
+                # models.DonationAccepted.objects.create(user=request.user, donation_request=donation_request) 
                 models.DonatioHistory.objects.create(user=request.user, donation_request=donation_request, status='Accepted')
                 return JsonResponse({'message': 'Donation Request Accepted'}, status=200)
             else:
@@ -221,11 +229,12 @@ def cancel(request, donation_request_id):
         donation_request = models.DonationRequest.objects.get(pk= donation_request_id)
         donation_request.is_accepted = False
         donation_request.status = 'Canceled'
+        donation_request.accepted_by = None
         donation_request.save()
         models.DonatioHistory.objects.create(user=request.user, donation_request=donation_request, status='Canceled')
 
-        donation_request_accept = models.DonationAccepted.objects.get(donation_request = donation_request_id)
-        donation_request_accept.delete()
+        # donation_request_accept = models.DonationAccepted.objects.get(donation_request = donation_request_id)
+        # donation_request_accept.delete()
 
         return JsonResponse({'message': 'Donation Request Canceled'}, status=200)
        
@@ -411,7 +420,7 @@ def statistics(request):
     pending_request_count = models.DonationRequest.objects.filter(user=request.user, status='Pending').count()
     accepted_request_count = models.DonationRequest.objects.filter(user=request.user, status='Accepted').count()
 
-    accepted_request_by_you_count = models.DonationAccepted.objects.filter(user= request.user).count()
+    accepted_request_by_you_count = models.DonationRequest.objects.filter(accepted_by= request.user).count()
 
     return Response({
         "total_donation_request": donation_request_count,
